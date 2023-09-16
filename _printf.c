@@ -10,7 +10,7 @@
 int _printf(const char *format, ...)
 {
 	va_list args; /* initialize type for iterating arguments */
-	int j, i = 0, numbyte = 0;
+	int spec_found, j, i = 0, numbyte = 0;
 
 	/* stuct to group specifiers */
 	selcfunc spec[] = {
@@ -25,23 +25,31 @@ int _printf(const char *format, ...)
 		if (format[i] != '%') /* print chars that are not % only */
 			numbyte += write(1, &format[i], 1);
 
-		else
+		else /* iterate format */
 		{
 			i++; /* move pointer past % */
 			j = 0;
+			spec_found = 0; /* flag to indicate specifier */
 
-			while (j < 2) /* iterate specifiers */
+			while (j < 3) /* iterate specifiers */
 			{
-				if (format[i] == spec[j].c)
+				if (format[i] == spec[j].c) /* specifier match */
 				{
 					numbyte += spec[j].f(args);
+					spec_found = 1; /* update flag */
 					break; /* exit loop */
 				}
 				j++;
+			}
+			if (!spec_found) /* unknown specifier */
+			{
+				numbyte += write(1, "%", 1); /* print % */
+				/* print unknown specifier */
+				numbyte += write(1, &format[i], 1);
 			}
 		}
 		i++;
 	}
 	va_end(args);
-	return (numbyte);
+	return (numbyte); /* number of char printed */
 }
