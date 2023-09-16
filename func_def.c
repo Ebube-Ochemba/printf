@@ -25,7 +25,7 @@ int print_char(va_list args)
 	char c = va_arg(args, int);
 
 	if (write(1, &c, 1) == -1)
-       return (0);
+		return (0);
 	return (1);
 }
 
@@ -42,12 +42,13 @@ int print_str(va_list args)
 	str = va_arg(args, char *);
 	if (str == NULL)
 	{
-		str = "";
+		str = "(null)";
+		return (write(1, str, 6));
 	}
 
 	len = calclen(str);
-	if (write(1, str, len) == -1) 
-       return (0);
+	if (write(1, str, len) == -1)
+		return (0);
 	return (len);
 }
 
@@ -74,8 +75,8 @@ int print_percent(va_list args)
 int unknown(char c)
 {
 	if (write(1, "%", 1) == -1)
-       return (0);
-    if (write(1, &c, 1) == -1)
+		return (0);
+	if (write(1, &c, 1) == -1)
 		return (0);
 	return (2);
 }

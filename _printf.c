@@ -11,21 +11,24 @@ int _printf(const char *format, ...)
 {
 	va_list args; /* initialize type for iterating arguments */
 	int spec_found, j, i = 0, numbyte = 0;
-	/* stuct to group specifiers */
 	selcfunc spec[] = {
 		{'%', print_percent}, {'c', print_char}, {'s', print_str}};
 
 	va_start(args, format);
+	if (format == NULL)
+		return (-1);
 	while (format && format[i]) /*iterate format */
 	{
 		if (format[i] != '%') /* print chars that are not % only */
-			numbyte += write(1, &format[i], 1);
+		{
+			if (write(1, &format[i], 1))
+				numbyte += 1;
+		}
 		else /* iterate format */
 		{
 			i++; /* move pointer past % */
 			j = 0;
 			spec_found = 0; /* flag to indicate specifier */
-
 			while (j < 3) /* iterate specifiers */
 			{
 				if (format[i] == spec[j].c) /* specifier match */
