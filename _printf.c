@@ -13,18 +13,19 @@ int _printf(const char *format, ...)
 	int j, i = 0, numbyte = 0;
 
 	/* stuct to group specifiers */
-	selcfunc spec[] = { {'c', print_char},
-		{'s', print_str} };
+	selcfunc spec[] = {
+		{'%', print_percent},
+		{'c', print_char},
+		{'s', print_str}};
 
 	va_start(args, format);
 
 	while (format && format[i]) /*iterate format */
 	{
 		if (format[i] != '%') /* print chars that are not % only */
-		{
-			 numbyte += write(1, &format[i], 1);
-		}
-		else /* specifier check */
+			numbyte += write(1, &format[i], 1);
+
+		else
 		{
 			i++; /* move pointer past % */
 			j = 0;

@@ -3,7 +3,6 @@
 /**
  * calclen - Calculates the lenght of a string.
  * @s: A pointer to the string.
- *
  * Return: Length of the string.
  */
 int calclen(char *s)
@@ -48,4 +47,18 @@ int print_str(va_list args)
 	len = calclen(str);
 	write(1, str, len);
 	return (len);
+}
+
+/**
+ * print_percent - prints %
+ * @args: specifiers
+ * Return: number of printed characters
+*/
+int print_percent(va_list args)
+{
+	char c = va_arg(args, int);
+
+	c = '%';
+	write(1, &c, 1);
+	return (1);
 }
