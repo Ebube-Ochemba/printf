@@ -24,7 +24,8 @@ int print_char(va_list args)
 {
 	char c = va_arg(args, int);
 
-	write(1, &c, 1);
+	if (write(1, &c, 1) == -1)
+       return (0);
 	return (1);
 }
 
@@ -45,7 +46,8 @@ int print_str(va_list args)
 	}
 
 	len = calclen(str);
-	write(1, str, len);
+	if (write(1, str, len) == -1) 
+       return (0);
 	return (len);
 }
 
@@ -59,6 +61,21 @@ int print_percent(va_list args)
 	char c = va_arg(args, int);
 
 	c = '%';
-	write(1, &c, 1);
+	if (write(1, &c, 1) == -1)
+		return (0);
 	return (1);
+}
+
+/**
+ * unknown - prints % and unknown characters
+ * @c: pointer to unknown character
+ * Return: number of printed characters
+*/
+int unknown(char c)
+{
+	if (write(1, "%", 1) == -1)
+       return (0);
+    if (write(1, &c, 1) == -1)
+		return (0);
+	return (2);
 }
