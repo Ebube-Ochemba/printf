@@ -7,7 +7,7 @@
 
 /**
  * struct sf - A struct for organizing functions based on
- *                   specifiers.
+ *             specifiers.
  * @c: Specifier char.
  * @f: Function pointer to print in correct format.
  */
@@ -24,5 +24,6 @@ int print_char(va_list args);
 int print_str(va_list args);
 int print_percent(va_list args);
 int unknown(char c);
+int sel_spec(char specifier, va_list args);
 
 #endif
