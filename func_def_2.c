@@ -14,13 +14,14 @@ int sel_spec(char specifier, va_list args)
 		{'%', print_percent},
 		{'c', print_char},
 		{'s', print_str},
-		{'d', print_int}
+		{'d', print_int},
+		{'i', print_int}
 	};
 
 	int j, numbyte = 0;
 	int spec_found = 0; /* flag to indicate specifier */
 
-	for (j = 0; j < 4; j++) /* iterate specifiers */
+	for (j = 0; j < 5; j++) /* iterate specifiers */
 	{
 		if (specifier == spec[j].c) /* specifier match */
 		{
@@ -51,15 +52,17 @@ int print_int(va_list args)
 	n = va_arg(args, int);
 	if (n == 0)
 	{
-		if (write(1, "0", 1) == -1)
-			return (0);
+		write(1, "0", 1);
 		numchar++;
-		return (1);
 	}
 	else if (n < 0)
 	{
-		if (write(1, "-", 1) == -1)
-			return (0);
+		write(1, "-", 1);
+		if (n == -2147483648)
+		{
+			write(1, "2147483648", 10);
+			return (11);
+		}
 		n = n * -1;
 		numchar++;
 		len = numchar - 1;
@@ -79,10 +82,8 @@ int print_int(va_list args)
 		c[counter] = (n % 10) + '0'; /* to convert it to a char */
 		n = n / 10;
 	}
-
 	if ((write(1, c, len) == -1))
 		return (0);
 	free(c);
-
 	return (numchar);
 }

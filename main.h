@@ -6,8 +6,7 @@
 #include <unistd.h>
 
 /**
- * struct sf - A struct for organizing functions based on
- *             specifiers.
+ * struct sf - A struct for organizing functions based on specifiers.
  * @c: Specifier char.
  * @f: Function pointer to print in correct format.
  */
