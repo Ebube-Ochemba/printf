@@ -1,4 +1,3 @@
-OA
 #include "main.h"
 
 /**
