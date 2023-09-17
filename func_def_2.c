@@ -89,11 +89,16 @@ int print_int(va_list args)
 	return (numchar);
 }
 
+/**
+ * print_binary - turns integers to binary
+ * @args: a variable argument list
+ * Return: number of printed characters
+*/
 int print_binary(va_list args)
 {
 	int num, size = 0, counter, n;
 	char *c;
-	
+
 	num = va_arg(args, int);
 	if (num == 0)
 		return (write(1, "0", 1));
@@ -105,7 +110,7 @@ int print_binary(va_list args)
 			size++;
 			n = n / 2;
 		}
-		c = (char *) malloc(size);
+		c = (char *) malloc(size + 1);
 		if (!c)
 			return (-1);
 		for (counter = size - 1; counter >= 0; counter--)
@@ -113,8 +118,9 @@ int print_binary(va_list args)
 			c[counter] = (num % 2) + '0';
 			num = num / 2;
 		}
+		c[size] = '\0';
 	}
-	write (1, c, size);
+	write(1, c, size);
 	free(c);
 	return (size);
 }
