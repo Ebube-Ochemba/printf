@@ -94,7 +94,7 @@ int print_int(va_list args)
  * @args: a variable argument list
  * Return: number of printed characters
 */
-B
+
 int print_binary(va_list args)
 {
 	int num, size = 0, counter, n;
