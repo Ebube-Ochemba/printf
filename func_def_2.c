@@ -3,7 +3,7 @@
 /**
  * sel_spec - Select a function based on specifier matched.
  * @specifier: The specifier to use.
- * @args: A variable argument list.
+ * @args: A variable BOBargument list.
  *
  * Return: number of bytes printed.
  */
@@ -36,42 +36,53 @@ int sel_spec(char specifier, va_list args)
 	return (numbyte);
 }
 
+/**
+ * print_int - prints an int.
+ * @args: A variable argument list.
+ *
+ * Return: Returns the number of bytes printed.
+ */
+
 int print_int(va_list args)
 {
-	int n, numchar =  0, temp, counter, m = 0;
+	int n, numchar =  0, temp, counter, len = 0;
 	char *c;
 
 	n = va_arg(args, int);
 	if (n == 0)
 	{
-		write(1, "0", 1);
+		if (write(1, "0", 1) == -1)
+			return (0);
 		numchar++;
 		return (1);
 	}
 	else if (n < 0)
 	{
-		write(1, "-", 1);
+		if (write(1, "-", 1) == -1)
+			return (0);
 		n = n * -1;
 		numchar++;
-		m = numchar - 1;
+		len = numchar - 1;
 	}
 	temp = n;
 	while (temp != 0)
 	{
 		temp = temp / 10;
 		numchar++;
-		m++;
+		len++;
 	}
-	c = (char *) malloc (m + 1);
+	c = (char *) malloc(len + 1);
 	if (!c)
 		return (-1);
-	for (counter = m - 1; counter >= 0; counter--)
+	for (counter = len - 1; counter >= 0; counter--)
 	{
-		c[counter] = (n % 10) + '0'; /*to convert it to a char*/
+		c[counter] = (n % 10) + '0'; /* to convert it to a char */
 		n = n / 10;
 	}
-	write (1, c, m);
+
+	if ((write(1, c, len) == -1))
+		return (0);
 	free(c);
-	
+
 	return (numchar);
 }
