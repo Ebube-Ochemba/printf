@@ -15,13 +15,14 @@ int sel_spec(char specifier, va_list args)
 		{'c', print_char},
 		{'s', print_str},
 		{'d', print_int},
-		{'i', print_int}
+		{'i', print_int},
+		{'b', print_binary}
 	};
 
 	int j, numbyte = 0;
 	int spec_found = 0; /* flag to indicate specifier */
 
-	for (j = 0; j < 5; j++) /* iterate specifiers */
+	for (j = 0; j < 6; j++) /* iterate specifiers */
 	{
 		if (specifier == spec[j].c) /* specifier match */
 		{
@@ -86,4 +87,34 @@ int print_int(va_list args)
 		return (0);
 	free(c);
 	return (numchar);
+}
+
+int print_binary(va_list args)
+{
+	int num, size = 0, counter, n;
+	char *c;
+	
+	num = va_arg(args, int);
+	if (num == 0)
+		return (write(1, "0", 1));
+	if (num > 0)
+	{
+		n = num;
+		while (n != 0)
+		{
+			size++;
+			n = n / 2;
+		}
+		c = (char *) malloc(size);
+		if (!c)
+			return (-1);
+		for (counter = size - 1; counter >= 0; counter--)
+		{
+			c[counter] = (num % 2) + '0';
+			num = num / 2;
+		}
+	}
+	write (1, c, size);
+	free(c);
+	return (size);
 }
