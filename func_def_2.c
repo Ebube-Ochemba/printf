@@ -75,17 +75,17 @@ int print_int(va_list args)
 		numchar++;
 		len++;
 	}
-	c = (char *) malloc(len + 1);
-	if (!c)
+	c = (char *) malloc(len + 1); 
+	if (!c) /* malloc check */
 		return (-1);
-	for (counter = len - 1; counter >= 0; counter--)
+	for (counter = len - 1; counter >= 0; counter--) /* iterate in reverse */
 	{
-		c[counter] = (n % 10) + '0'; /* to convert it to a char */
+		c[counter] = (n % 10) + '0'; /* convert to a char & store */
 		n = n / 10;
 	}
-	if ((write(1, c, len) == -1))
+	if ((write(1, c, len) == -1)) /* print c */
 		return (0);
-	free(c);
+	free(c); /* clear memory */
 	return (numchar);
 }
 
