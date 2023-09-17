@@ -75,13 +75,13 @@ int print_int(va_list args)
 		numchar++;
 		len++;
 	}
-	c = (char *) malloc(len + 1); 
+	c = (char *) malloc(len + 1);
 	if (!c) /* malloc check */
 		return (-1);
 	for (counter = len - 1; counter >= 0; counter--) /* iterate in reverse */
 	{
 		c[counter] = (n % 10) + '0'; /* convert to a char & store */
-		n = n / 10;
+		n = n / 10; /* update value */
 	}
 	if ((write(1, c, len) == -1)) /* print c */
 		return (0);
@@ -94,33 +94,34 @@ int print_int(va_list args)
  * @args: a variable argument list
  * Return: number of printed characters
 */
+B
 int print_binary(va_list args)
 {
 	int num, size = 0, counter, n;
 	char *c;
 
-	num = va_arg(args, int);
-	if (num == 0)
+	num = va_arg(args, int); /* retrieve argument value and store */
+	if (num == 0) /* special case */
 		return (write(1, "0", 1));
-	if (num > 0)
+	if (num > 0) /* positive integers */
 	{
 		n = num;
-		while (n != 0)
+		while (n != 0) /* count number of binary digits */
 		{
 			size++;
 			n = n / 2;
 		}
 		c = (char *) malloc(size + 1);
-		if (!c)
+		if (!c) /* malloc check */
 			return (-1);
-		for (counter = size - 1; counter >= 0; counter--)
+		for (counter = size - 1; counter >= 0; counter--) /* fill array in reverse */
 		{
 			c[counter] = (num % 2) + '0';
-			num = num / 2;
+			num = num / 2; /* update value */
 		}
-		c[size] = '\0';
+		c[size] = '\0'; /* add NULL byte */
 	}
-	write(1, c, size);
-	free(c);
+	write(1, c, size); /* print binary number */
+	free(c); /* clear memory */
 	return (size);
 }
