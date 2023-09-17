@@ -50,26 +50,26 @@ int print_int(va_list args)
 	int n, numchar =  0, temp, counter, len = 0;
 	char *c;
 
-	n = va_arg(args, int);
-	if (n == 0)
+	n = va_arg(args, int); /* retrieve argument value and store */
+	if (n == 0) /* special case */
 	{
 		write(1, "0", 1);
 		numchar++;
 	}
 	else if (n < 0)
 	{
-		write(1, "-", 1);
-		if (n == -2147483648)
+		write(1, "-", 1); /* indicate negative value */
+		if (n == -2147483648) /* special case */
 		{
 			write(1, "2147483648", 10);
 			return (11);
 		}
-		n = n * -1;
+		n = n * -1; /* update absolute value */
 		numchar++;
-		len = numchar - 1;
+		len = numchar - 1; /* b/c of the negative sign */
 	}
 	temp = n;
-	while (temp != 0)
+	while (temp != 0) /* calculate number of digits */
 	{
 		temp = temp / 10;
 		numchar++;
