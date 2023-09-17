@@ -72,5 +72,6 @@ int print_int(va_list args)
 	}
 	write (1, c, m);
 	free(c);
+	
 	return (numchar);
 }
