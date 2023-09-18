@@ -108,46 +108,40 @@ int print_hex_up(va_list args)
 int print_string(va_list args)
 {
 	char *str;
-	int len = 0, counter, char_to_int, temp;
+	int len = 0, counter, char_to_int;
 	char c, c1, c2;
 
 	str = va_arg(args, char *);
 	if (str == NULL)
 	{
 		str = "(null)";
-		return (write(1, str, 6));
+		len += write(1, str, 6);
+		return (len);
 	}
+
 	for (counter = 0; str[counter] != '\0'; counter++)
 	{
 		if (str[counter] >= 32 && str[counter] < 127)
-		{
-			write(1, &str[counter], 1);
-			len++;
-		} else
+			len += write(1, &str[counter], 1);
+		else
 		{
 			char_to_int = str[counter];
-			write(1, "\\x", 2);
-			len = len + 2;
+			len += write(1, "\\x", 2);
+
 			if (char_to_int < 16)
 			{
-				write(1, "0", 1);
-				c = det_hex_up(char_to_int);
-				write(1, &c, 1);
-				len = len + 2;
+				len += write(1, "0", 1);
+				c = (char)det_hex_up(char_to_int);
+				len += write(1, &c, 1);
 			} else
 			{
-				temp = char_to_int % 16;
-				c2 = det_hex_up(temp);
+				c2 = (char)det_hex_up(char_to_int % 16);
 				char_to_int = char_to_int / 16;
-				temp = char_to_int % 16;
-				c1 = det_hex_up(temp);
-				write(1, &c1, 1);
-				write(1, &c2, 1);
-				len = len + 2;
+				c1 = (char)det_hex_up(char_to_int % 16);
+				len += write(1, &c1, 1);
+				len += write(1, &c2, 1);
 			}
 		}
 	}
-	if (write(1, str, len) == -1)
-		return (0);
 	return (len);
 }
