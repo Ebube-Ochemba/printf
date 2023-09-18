@@ -1,44 +1,6 @@
 #include "main.h"
 
 /**
- * sel_spec - Select a function based on specifier matched.
- * @specifier: The specifier to use.
- * @args: A variable BOBargument list.
- *
- * Return: number of bytes printed.
- */
-
-int sel_spec(char specifier, va_list args)
-{
-	selcfunc spec[] = {
-		{'%', print_percent},
-		{'c', print_char},
-		{'s', print_str},
-		{'d', print_int},
-		{'i', print_int},
-		{'b', print_binary}
-	};
-
-	int j, numbyte = 0;
-	int spec_found = 0; /* flag to indicate specifier */
-
-	for (j = 0; j < 6; j++) /* iterate specifiers */
-	{
-		if (specifier == spec[j].c) /* specifier match */
-		{
-			numbyte += spec[j].f(args);
-			spec_found = 1; /* update flag */
-			break; /* exit loop */
-		}
-	}
-	if (!spec_found) /* unknown specifier */
-	{
-		numbyte += unknown(specifier);
-	}
-	return (numbyte);
-}
-
-/**
  * print_int - prints an int.
  * @args: A variable argument list.
  *
@@ -97,7 +59,8 @@ int print_int(va_list args)
 
 int print_binary(va_list args)
 {
-	int num, size = 0, counter, n;
+	unsigned int num, n;
+	int size = 0, counter;
 	char *c;
 
 	num = va_arg(args, int); /* retrieve argument value and store */
@@ -114,7 +77,7 @@ int print_binary(va_list args)
 		c = (char *) malloc(size + 1);
 		if (!c) /* malloc check */
 			return (-1);
-		for (counter = size - 1; counter >= 0; counter--) /* fill array in reverse */
+		for (counter = size - 1; counter >= 0; counter--)
 		{
 			c[counter] = (num % 2) + '0';
 			num = num / 2; /* update value */
@@ -123,5 +86,48 @@ int print_binary(va_list args)
 	}
 	write(1, c, size); /* print binary number */
 	free(c); /* clear memory */
+	return (size);
+}
+
+/**
+ * print_oct - turns an integer to octal
+ * @args: a variable argument list
+ * Return: number of printed characters
+*/
+int print_oct(va_list args)
+{
+	unsigned int num, n;
+	int size = 0, allocsize = 0, counter;
+	char *c;
+
+	num = va_arg(args, int);
+	if (!num)
+		return (write(1, "0", 1));
+	if (num < 8)
+	{
+		*c = num + '0';
+		return (write(1, &c, 1));
+	}
+	if (num > 0)
+	{
+		n = num;
+		while (n != 0)
+		{
+			size++;
+			allocsize++;
+			n = n / 8;
+		}
+		c = (char *) malloc(allocsize + 1);
+		if (!c)
+			return (-1);
+		for (counter = allocsize - 1; counter >= 0; counter--)
+		{
+			c[counter] = (num % 8) + '0';
+			num = num / 8;
+		}
+		c[allocsize] = '\0';
+	}
+	write(1, c, allocsize);
+	free(c);
 	return (size);
 }
