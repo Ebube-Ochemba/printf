@@ -170,10 +170,9 @@ int print_hex_low(va_list args)
 	char *c;
 
 	num = va_arg(args, int);
-	if (num < 16)
+	if (num == 0)
 	{
-		*c = det_hex_low(num);
-		return (write(1, &c, 1));
+		return (write(1, "0", 1));
 	}
 	n = num;
 	while (n != 0)

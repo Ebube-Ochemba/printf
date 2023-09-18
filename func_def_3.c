@@ -9,39 +9,33 @@
 
 int print_unsigned_int(va_list args)
 {
-	unsigned int n, numchar =  0, temp, counter, len = 0;
+	unsigned int n, temp;
+	int counter, len = 0;
 	char *c;
 
 	n = va_arg(args, int); /* retrieve argument value and store */
 	if (n == 0) /* special case */
+		return (write(1, "0", 1));
+	temp = n;
+	while (temp != 0) /* calculate number of digits */
 	{
-		write(1, "0", 1);
-		numchar++;
-	}
-	else
-	{
-		temp = n;
-		while (temp != 0) /* calculate number of digits */
-		{
-			temp = temp / 10;
-			numchar++;
-			len++;
-		}
+		temp = temp / 10;
+		len++;
 	}
 	c = (char *) malloc(len + 1);
 	if (!c) /* malloc check */
 		return (-1);
 
 	/* iterate in reverse */
-	for (counter = len - 1; counter != (unsigned int)-1; counter--)
+	for (counter = len - 1; counter >= 0; counter--)
 	{
 		c[counter] = (n % 10) + '0'; /* convert to a char & store */
 		n = n / 10; /* update value */
 	}
-	if ((write(1, c, len) == -1)) /* print c */
-		return (0);
+	c[len] = '\0';
+	write(1, c, len);
 	free(c); /* clear memory */
-	return (numchar);
+	return (len);
 }
 
 /**
@@ -82,10 +76,9 @@ int print_hex_up(va_list args)
 	char *c;
 
 	num = va_arg(args, int);
-	if (num < 16)
+	if (num == 0)
 	{
-		*c = det_hex_up(num);
-		return (write(1, &c, 1));
+		return (write(1, "0", 1));
 	}
 	n = num;
 	while (n != 0)
