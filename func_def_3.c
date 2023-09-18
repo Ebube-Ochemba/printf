@@ -43,3 +43,66 @@ int print_unsigned_int(va_list args)
 	free(c); /* clear memory */
 	return (numchar);
 }
+
+/**
+ * det_hex_up - determines the character corresponding to hexadecimal
+ * @n: number
+ * Return: character
+*/
+char det_hex_up(int n)
+{
+	char c;
+
+	if (n < 10)
+		c = n + '0';
+	else if (n == 10)
+		c = 'A';
+	else if (n == 11)
+		c = 'B';
+	else if (n == 12)
+		c = 'C';
+	else if (n == 13)
+		c = 'D';
+	else if (n == 14)
+		c = 'E';
+	else if (n == 15)
+		c = 'F';
+	return (c);
+}
+
+/**
+ * print_hex_up - turns an integer to hexadecimal
+ * @args: a variable argument list
+ * Return: number of printed characters
+*/
+int print_hex_up(va_list args)
+{
+	unsigned int num, n;
+	int size = 0, counter;
+	char *c;
+
+	num = va_arg(args, int);
+	if (num < 16)
+	{
+		*c = det_hex_up(num);
+		return (write(1, &c, 1));
+	}
+	n = num;
+	while (n != 0)
+	{
+		size++;
+		n = n / 16;
+	}
+	c = (char *) malloc(size + 1);
+	if (!c)
+		return (-1);
+	for (counter = size - 1; counter >= 0; counter--)
+	{
+		c[counter] = det_hex_up(num % 16);
+		num = num / 16;
+	}
+	c[size] = '\0';
+	write(1, c, size);
+	free(c);
+	return (size);
+}

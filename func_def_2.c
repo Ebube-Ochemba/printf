@@ -98,7 +98,7 @@ int print_binary(va_list args)
 int print_oct(va_list args)
 {
 	unsigned int num, n;
-	int size = 0, allocsize = 0, counter;
+	int allocsize = 0, counter;
 	char *c;
 
 	num = va_arg(args, int);
@@ -114,7 +114,6 @@ int print_oct(va_list args)
 		n = num;
 		while (n != 0)
 		{
-			size++;
 			allocsize++;
 			n = n / 8;
 		}
@@ -129,6 +128,69 @@ int print_oct(va_list args)
 		c[allocsize] = '\0';
 	}
 	write(1, c, allocsize);
+	free(c);
+	return (allocsize);
+}
+
+/**
+ * det_hex_low - determines the character corresponding to hexadecimal
+ * @n: number
+ * Return: character
+*/
+char det_hex_low(int n)
+{
+	char c;
+
+	if (n < 10)
+		c = n + '0';
+	else if (n == 10)
+		c = 'a';
+	else if (n == 11)
+		c = 'b';
+	else if (n == 12)
+		c = 'c';
+	else if (n == 13)
+		c = 'd';
+	else if (n == 14)
+		c = 'e';
+	else if (n == 15)
+		c = 'f';
+	return (c);
+}
+
+/**
+ * print_hex_low - turns an integer to hexadecimal
+ * @args: a variable argument list
+ * Return: number of printed characters
+*/
+int print_hex_low(va_list args)
+{
+	unsigned int num, n;
+	int size = 0, counter;
+	char *c;
+
+	num = va_arg(args, int);
+	if (num < 16)
+	{
+		*c = det_hex_low(num);
+		return (write(1, &c, 1));
+	}
+	n = num;
+	while (n != 0)
+	{
+		size++;
+		n = n / 16;
+	}
+	c = (char *) malloc(size + 1);
+	if (!c)
+		return (-1);
+	for (counter = size - 1; counter >= 0; counter--)
+	{
+		c[counter] = det_hex_low(num % 16);
+		num = num / 16;
+	}
+	c[size] = '\0';
+	write(1, c, size);
 	free(c);
 	return (size);
 }

@@ -19,13 +19,15 @@ int sel_spec(char specifier, va_list args)
 		{'i', print_int},
 		{'b', print_binary},
 		{'o', print_oct},
-		{'u', print_unsigned_int}
+		{'u', print_unsigned_int},
+		{'x', print_hex_low},
+		{'X', print_hex_up}
 	};
 
 	int j, numbyte = 0;
 	int spec_found = 0; /* flag to indicate specifier */
 
-	for (j = 0; j < 8; j++) /* iterate specifiers */
+	for (j = 0; j < 10; j++) /* iterate specifiers */
 	{
 		if (specifier == spec[j].c) /* specifier match */
 		{

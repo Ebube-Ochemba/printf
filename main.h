@@ -28,6 +28,9 @@ int print_int(va_list args);
 int print_binary(va_list args);
 int print_oct(va_list args);
 int print_unsigned_int(va_list args);
-
+int print_hex_low(va_list args);
+int print_hex_up(va_list args);
+char det_hex_low(int n);
+char det_hex_up(int n);
 
 #endif
