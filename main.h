@@ -32,5 +32,6 @@ int print_hex_low(va_list args);
 int print_hex_up(va_list args);
 char det_hex_low(int n);
 char det_hex_up(int n);
+int print_string(va_list args);
 
 #endif
