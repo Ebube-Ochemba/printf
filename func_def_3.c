@@ -174,7 +174,7 @@ int print_address(va_list args)
 		len++;
 		temp >>= 4;
 	}
-	for (i = len - 1; i >= 0; i--i) /* Convert to Hex */
+	for (i = len - 1; i >= 0; i--) /* Convert to Hex */
 	{
 		digit = (addr >> (i * 4)) & 0xF;
 		c = det_hex_low(digit);
