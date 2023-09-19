@@ -159,6 +159,8 @@ int print_address(va_list args)
 	char c;
 
 	ptr = va_arg (args, void *);
+	if (ptr == NULL)
+		return (write(1, "(nil)", 5));
 	addr = (uintptr_t) ptr;
 	write(1, "0x", 2);
 	size = size + 2;
