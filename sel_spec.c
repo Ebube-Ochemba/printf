@@ -1,15 +1,15 @@
 #include "main.h"
 
-
 /**
  * sel_spec - Select a function based on specifier matched.
  * @specifier: The specifier to use.
  * @args: A variable BOBargument list.
+ * @flag: Place holder.
  *
  * Return: number of bytes printed.
  */
 
-int sel_spec(char specifier, va_list args)
+int sel_spec(char specifier, char flag, va_list args)
 {
 	selcfunc spec[] = {
 		{'%', print_percent},
@@ -25,10 +25,18 @@ int sel_spec(char specifier, va_list args)
 		{'S', print_string},
 		{'p', print_address}
 	};
-
 	int j, numbyte = 0;
 	int spec_found = 0; /* flag to indicate specifier */
+	char f;
 
+	if (specifier == '+') /* flag case */
+	{
+		f = '+';
+		if (write(1, &f, 1) == -1)
+			return (0);
+		numbyte++;
+		specifier = flag; /* update specifies */
+	}
 	for (j = 0; j < 12; j++) /* iterate specifiers */
 	{
 		if (specifier == spec[j].c) /* specifier match */

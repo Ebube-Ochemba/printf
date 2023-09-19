@@ -26,7 +26,7 @@ int _printf(const char *format, ...)
 		}
 		else /* handle specifier */
 		{
-			numbyte += sel_spec(format[i + 1], args);
+			numbyte += sel_spec(format[i + 1], format[i + 2], args);
 			i++; /* skip the specifier */
 		}
 		i++; /* move to next char in format string */

@@ -24,7 +24,7 @@ int print_char(va_list args);
 int print_str(va_list args);
 int print_percent(va_list args);
 int unknown(char c);
-int sel_spec(char specifier, va_list args);
+int sel_spec(char specifier, char flag, va_list args);
 int print_int(va_list args);
 int print_binary(va_list args);
 int print_oct(va_list args);
