@@ -160,10 +160,12 @@ int print_address(va_list args)
 	char c;
 
 	ptr = va_arg(args, void *);
-	if (ptr == NULL)
+	if (ptr == NULL) /* check pointer */
 		return (write(1, "(nil)", 5));
-	addr = (uintptr_t) ptr;
-	write(1, "0x", 2);
+
+	addr = (uintptr_t) ptr; /* convert and store pointer */
+
+	write(1, "0x", 2); /* Hex rep */
 	size = size + 2;
 	temp = addr;
 
@@ -172,7 +174,7 @@ int print_address(va_list args)
 		len++;
 		temp >>= 4;
 	}
-	for (i = len - 1; i >= 0; i--)
+	for (i = len - 1; i >= 0; i--i) /* Convert to Hex */
 	{
 		digit = (addr >> (i * 4)) & 0xF;
 		c = det_hex_low(digit);
