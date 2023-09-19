@@ -22,13 +22,14 @@ int sel_spec(char specifier, va_list args)
 		{'u', print_unsigned_int},
 		{'x', print_hex_low},
 		{'X', print_hex_up},
-		{'S', print_string}
+		{'S', print_string},
+		{'p', print_address}
 	};
 
 	int j, numbyte = 0;
 	int spec_found = 0; /* flag to indicate specifier */
 
-	for (j = 0; j < 11; j++) /* iterate specifiers */
+	for (j = 0; j < 12; j++) /* iterate specifiers */
 	{
 		if (specifier == spec[j].c) /* specifier match */
 		{

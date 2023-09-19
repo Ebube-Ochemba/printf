@@ -4,6 +4,7 @@
 #include <stdarg.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdint.h>
 
 /**
  * struct sf - A struct for organizing functions based on specifiers.
@@ -33,5 +34,6 @@ int print_hex_up(va_list args);
 char det_hex_low(int n);
 char det_hex_up(int n);
 int print_string(va_list args);
+int print_address(va_list args);
 
 #endif

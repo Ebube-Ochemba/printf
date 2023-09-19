@@ -145,3 +145,35 @@ int print_string(va_list args)
 	}
 	return (len);
 }
+
+/**
+ * print_address - prints the address of the variable
+ * @args: a variable argument list
+ * Return: number of printed characters
+*/
+int print_address(va_list args)
+{
+	void *ptr;
+	int size = 0, len = 0, i; 
+	intptr_t addr, temp, digit;
+	char c;
+
+	ptr = va_arg (args, void *);
+	addr = (uintptr_t) ptr;
+	write(1, "0x", 2);
+	size = size + 2;
+	temp = addr;
+    while (temp > 0)
+	{
+        len++;
+        temp >>= 4;
+    }
+	for (i = len - 1; i >= 0; i--)
+	{
+		digit = (addr >> (i * 4)) & 0xF;
+		c = det_hex_low(digit);
+		write(1, &c, 1);
+		size++;
+	}
+	return (size);
+}
