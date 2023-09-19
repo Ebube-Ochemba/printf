@@ -155,7 +155,7 @@ int print_string(va_list args)
 int print_address(va_list args)
 {
 	void *ptr;
-	int size = 0, len = 0, i; 
+	int size = 0, len = 0, i;
 	intptr_t addr, temp, digit;
 	char c;
 
@@ -166,11 +166,12 @@ int print_address(va_list args)
 	write(1, "0x", 2);
 	size = size + 2;
 	temp = addr;
-    while (temp > 0)
+	
+	while (temp > 0)
 	{
-        len++;
-        temp >>= 4;
-    }
+		len++;
+		temp >>= 4;
+	}
 	for (i = len - 1; i >= 0; i--)
 	{
 		digit = (addr >> (i * 4)) & 0xF;
