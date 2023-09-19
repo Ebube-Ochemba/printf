@@ -76,26 +76,27 @@ int print_hex_up(va_list args)
 	char *c;
 
 	num = va_arg(args, int);
-	if (num == 0)
+	if (num == 0) /* specia case */
 	{
 		return (write(1, "0", 1));
 	}
 	n = num;
-	while (n != 0)
+	while (n != 0) /* Hex conversion */
 	{
 		size++;
 		n = n / 16;
 	}
 	c = (char *) malloc(size + 1);
-	if (!c)
+	if (!c) /* malloc check */
 		return (-1);
 	for (counter = size - 1; counter >= 0; counter--)
 	{
+		/* iterate in reverse and store as string */
 		c[counter] = det_hex_up(num % 16);
 		num = num / 16;
 	}
-	c[size] = '\0';
-	write(1, c, size);
+	c[size] = '\0'; /* insert null byte */
+	write(1, c, size); /* printt */
 	free(c);
 	return (size);
 }
@@ -112,7 +113,7 @@ int print_string(va_list args)
 	char c, c1, c2;
 
 	str = va_arg(args, char *);
-	if (str == NULL)
+	if (str == NULL) /* check string */
 	{
 		str = "(null)";
 		len += write(1, str, 6);
@@ -121,9 +122,9 @@ int print_string(va_list args)
 
 	for (counter = 0; str[counter] != '\0'; counter++)
 	{
-		if (str[counter] >= 32 && str[counter] < 127)
+		if (str[counter] >= 32 && str[counter] < 127) /* ASCII check */
 			len += write(1, &str[counter], 1);
-		else
+		else /* Hexadecimal representation */
 		{
 			char_to_int = str[counter];
 			len += write(1, "\\x", 2);
