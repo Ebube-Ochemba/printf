@@ -162,7 +162,6 @@ int print_address(va_list args)
 	ptr = va_arg(args, void *);
 	if (ptr == NULL) /* check pointer */
 		return (write(1, "(nil)", 5));
-		
 
 	if (ptr == (void *)-1)
 		return (write(1, "0xffffffffffffffff", 18));

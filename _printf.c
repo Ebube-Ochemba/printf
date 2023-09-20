@@ -27,7 +27,7 @@ int _printf(const char *format, ...)
 		else /* handle specifier */
 		{
 			if (format[i + 1] == '%')
-				numbyte += print_percent ();
+				numbyte += print_percent();
 			else
 				numbyte += sel_spec(format[i + 1], args);
 			i++; /* skip the specifier */

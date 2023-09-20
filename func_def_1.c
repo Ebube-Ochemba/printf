@@ -54,7 +54,6 @@ int print_str(va_list args)
 
 /**
  * print_percent - prints %
- * @args: specifiers
  * Return: number of printed characters
 */
 int print_percent(void)
