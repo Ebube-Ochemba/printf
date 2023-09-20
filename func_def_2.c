@@ -100,14 +100,15 @@ int print_oct(va_list args)
 	unsigned int num, n;
 	int allocsize = 0, counter;
 	char *c;
+	char c2;
 
 	num = va_arg(args, int);
 	if (!num)
 		return (write(1, "0", 1));
 	if (num < 8)
 	{
-		*c = num + '0';
-		return (write(1, &c, 1));
+		c2 = num + '0';
+		return (write(1, &c2, 1));
 	}
 	if (num > 0)
 	{

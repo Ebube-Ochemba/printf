@@ -57,9 +57,9 @@ int print_str(va_list args)
  * @args: specifiers
  * Return: number of printed characters
 */
-int print_percent(va_list args)
+int print_percent(void)
 {
-	char c = va_arg(args, int);
+	char c;
 
 	c = '%';
 	if (write(1, &c, 1) == -1)
@@ -74,6 +74,8 @@ int print_percent(va_list args)
 */
 int unknown(char c)
 {
+	if (!c)
+		return (-1);
 	if (write(1, "%", 1) == -1)
 		return (0);
 	if (write(1, &c, 1) == -1)

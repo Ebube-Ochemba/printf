@@ -12,7 +12,6 @@
 int sel_spec(char specifier, va_list args)
 {
 	selcfunc spec[] = {
-		{'%', print_percent},
 		{'c', print_char},
 		{'s', print_str},
 		{'d', print_int},
@@ -29,7 +28,7 @@ int sel_spec(char specifier, va_list args)
 	int j, numbyte = 0;
 	int spec_found = 0; /* flag to indicate specifier */
 
-	for (j = 0; j < 12; j++) /* iterate specifiers */
+	for (j = 0; j < 11; j++) /* iterate specifiers */
 	{
 		if (specifier == spec[j].c) /* specifier match */
 		{

@@ -156,12 +156,16 @@ int print_address(va_list args)
 {
 	void *ptr;
 	int size = 0, len = 0, i;
-	intptr_t addr, temp, digit;
+	uintptr_t addr, temp, digit;
 	char c;
 
 	ptr = va_arg(args, void *);
 	if (ptr == NULL) /* check pointer */
 		return (write(1, "(nil)", 5));
+		
+
+	if (ptr == (void *)-1)
+		return (write(1, "0xffffffffffffffff", 18));
 
 	addr = (uintptr_t) ptr; /* convert and store pointer */
 
